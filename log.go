@@ -95,3 +95,7 @@ func (l *Logger) Warn() *Event {
 func (l *Logger) Error() *Event {
 	return l.newEvent(ErrorLevel)
 }
+
+func (l *Logger) Fatal() *Event {
+	return l.newEvent(ErrorLevel)
+}
