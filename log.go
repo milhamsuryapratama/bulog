@@ -87,3 +87,11 @@ func (l *Logger) Info() *Event {
 func (l *Logger) Debug() *Event {
 	return l.newEvent(DebugLevel)
 }
+
+func (l *Logger) Warn() *Event {
+	return l.newEvent(WarnLevel)
+}
+
+func (l *Logger) Error() *Event {
+	return l.newEvent(ErrorLevel)
+}
