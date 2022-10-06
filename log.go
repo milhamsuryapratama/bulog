@@ -97,5 +97,5 @@ func (l *Logger) Error() *Event {
 }
 
 func (l *Logger) Fatal() *Event {
-	return l.newEvent(ErrorLevel)
+	return l.newEvent(FatalLevel)
 }
