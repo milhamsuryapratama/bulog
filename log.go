@@ -72,7 +72,13 @@ func New(w io.Writer) Logger {
 	return Logger{w: lw, level: TraceLevel}
 }
 
-func (l *Logger) newEvent(level Level) *Event {
+func (l *Logger) newEvent(level Level, done func(string)) *Event {
+        // if func is not nil
+        // execute the function and return
+        if done != nil {
+	    done("")
+	}
+
 	e := newEvent(l.w, level)
 	if level != NoLevel {
 		e.Str(LevelFieldName, level.String())
@@ -94,4 +100,8 @@ func (l *Logger) Warn() *Event {
 
 func (l *Logger) Error() *Event {
 	return l.newEvent(ErrorLevel)
+}
+
+func (l *Logger) Fatal() *Event {
+	return l.newEvent(FatalLevel, func(msg string) { os.Exit(1) })
 }
