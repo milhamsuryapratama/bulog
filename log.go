@@ -3,6 +3,7 @@ package bulog
 import (
 	"io"
 	"io/ioutil"
+	"os"
 	"strconv"
 )
 
@@ -73,10 +74,9 @@ func New(w io.Writer) Logger {
 }
 
 func (l *Logger) newEvent(level Level, done func(string)) *Event {
-        // if func is not nil
-        // execute the function and return
-        if done != nil {
-	    done("")
+	if done != nil {
+		done("")
+		return nil
 	}
 
 	e := newEvent(l.w, level)
@@ -87,21 +87,25 @@ func (l *Logger) newEvent(level Level, done func(string)) *Event {
 }
 
 func (l *Logger) Info() *Event {
-	return l.newEvent(InfoLevel)
+	return l.newEvent(InfoLevel, nil)
 }
 
 func (l *Logger) Debug() *Event {
-	return l.newEvent(DebugLevel)
+	return l.newEvent(DebugLevel, nil)
 }
 
 func (l *Logger) Warn() *Event {
-	return l.newEvent(WarnLevel)
+	return l.newEvent(WarnLevel, nil)
 }
 
 func (l *Logger) Error() *Event {
-	return l.newEvent(ErrorLevel)
+	return l.newEvent(ErrorLevel, nil)
 }
 
 func (l *Logger) Fatal() *Event {
 	return l.newEvent(FatalLevel, func(msg string) { os.Exit(1) })
+}
+
+func (l *Logger) Panic() *Event {
+	return l.newEvent(PanicLevel, func(msg string) { panic(msg) })
 }
