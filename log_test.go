@@ -12,13 +12,15 @@ func TestNewLog(t *testing.T) {
 	log.Debug().Msg("hello world")
 	log.Warn().Msg("hello world")
 	log.Error().Msg("hello world")
-        log.Fatal().Msg("hello world")
+	log.Fatal().Msg("hello world")
+	log.Panic().Msg("hello world")
 
 	go infoLog(log)
 	go debugLog(log)
 	go warnLog(log)
 	go errorLog(log)
-        go fatalLog(log)
+	go fatalLog(log)
+	go panicLog(log)
 }
 
 func infoLog(log Logger) {
@@ -39,4 +41,8 @@ func errorLog(log Logger) {
 
 func fatalLog(log Logger) {
 	log.Fatal().Msg("hello world")
+}
+
+func panicLog(log Logger) {
+	log.Panic().Msg("hello world")
 }
