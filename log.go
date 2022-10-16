@@ -1,6 +1,7 @@
 package bulog
 
 import (
+	"fmt"
 	"io"
 	"io/ioutil"
 	"os"
@@ -108,4 +109,14 @@ func (l *Logger) Fatal() *Event {
 
 func (l *Logger) Panic() *Event {
 	return l.newEvent(PanicLevel, func(msg string) { panic(msg) })
+}
+
+// default log level Print is debug
+func (l *Logger) Print(v ...interface{}) {
+	l.Debug().Msg(fmt.Sprint(v...))
+}
+
+// default log level Printf is debug
+func (l *Logger) Printf(format string, v ...interface{}) {
+	l.Debug().Msg(fmt.Sprintf(format, v...))
 }
